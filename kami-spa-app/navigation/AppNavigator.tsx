@@ -7,6 +7,9 @@ import ServiceDetailScreen from '../screens/ServiceDetailScreen'; // Your detail
 import AddServiceScreen from '../screens/AddService';
 import { RootStackParamList } from '../types';
 import AddCUstomerScreen from '../screens/AddCustomer';
+import TransactionDetailScreen from '../screens/TransactionDetailScreen';
+import CustomerDetail from '../screens/CustomerDetail';
+import EditCustomer from '../screens/CustomerEdit';
 
 const Stack = createNativeStackNavigator();
 
@@ -36,6 +39,21 @@ export default function AppNavigator() {
                 name="AddCustomer"
                 component={AddCUstomerScreen}
                 options={{ title: 'Add Customer' }}
+            />
+            <Stack.Screen
+                name="TransactionDetail"
+                component={TransactionDetailScreen}
+                options={{ title: 'Transction Detail' }}
+            />
+            <Stack.Screen
+                name="CustomerDetail"
+                component={CustomerDetail}
+                options={{ title: 'Customer Detail' }}
+            />
+            <Stack.Screen
+                name="CustomerEdit"
+                component={EditCustomer}
+                options={{ title: 'Customer Edit' }}
             />
         </Stack.Navigator>
         // </NavigationContainer>

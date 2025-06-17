@@ -14,7 +14,7 @@ export default function LoginScreen({ navigation }) {
             const res = await axios.post('https://kami-backend-5rs0.onrender.com/auth', { phone, password });
             // await AsyncStorage.setItem('token', res.data.token);
             login(res.data.token);
-            navigation.replace('Home');
+            navigation.replace('/Home');
         } catch (error) {
             Alert.alert('Login failed', 'Invalid phone or password');
         }

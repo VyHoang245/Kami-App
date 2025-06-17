@@ -26,7 +26,7 @@ export default function CustomerScreen({ navigation }) {
     const renderItem = ({ item }) => (
         <TouchableOpacity
             style={styles.item}
-        // onPress={() => navigation.navigate('ServiceDetail', { service: item })}
+            onPress={() => navigation.navigate('CustomerDetail', { customerId: item._id })}
         >
             <View>
                 <Text style={styles.smallTitle}>Customer: {item.name}</Text>
@@ -42,18 +42,20 @@ export default function CustomerScreen({ navigation }) {
     );
 
     return (
-        <SafeAreaView style={styles.container}>
-            <TouchableOpacity
-                style={styles.floatingButton}
-                onPress={() => navigation.navigate('AddCustomer')}
-            >
-                <Text style={styles.floatingButtonText}>+</Text>
-            </TouchableOpacity>
+        <SafeAreaView style={styles.cover}>
             <View style={styles.header}>
                 <Text style={styles.title}>Customer</Text>
             </View>
+            <View style={styles.container}>
+                <FlatList data={customers} renderItem={renderItem} keyExtractor={(item) => item._id} />
+                <TouchableOpacity
+                    style={styles.floatingButton}
+                    onPress={() => navigation.navigate('AddCustomer')}
+                >
+                    <Text style={styles.floatingButtonText}>+</Text>
+                </TouchableOpacity>
+            </View>
 
-            <FlatList data={customers} renderItem={renderItem} keyExtractor={(item) => item._id} />
         </SafeAreaView>
     );
 }
@@ -61,12 +63,12 @@ export default function CustomerScreen({ navigation }) {
 const styles = StyleSheet.create({
     container: { flex: 1, padding: 20 },
     header: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
+        width: '100%',
+        // flexDirection: 'row',
+        // justifyContent: 'space-between',
+        // alignItems: 'center',
         backgroundColor: '#ef476f',
         padding: 16,
-        borderRadius: 10,
     },
     sectionTitle: { fontSize: 20, fontWeight: 'bold', marginBottom: 10 },
     title: { color: '#fff', fontWeight: 'bold', fontSize: 18 },
@@ -83,6 +85,7 @@ const styles = StyleSheet.create({
     },
     smallTitle: { fontSize: 16, color: '#aaa' },
     guest: { fontSize: 16, fontWeight: 'bold', color: 'red' },
+
     cover: { flex: 1, justifyContent: 'center', textAlign: 'left', alignItems: 'flex-end' },
     floatingButton: {
         backgroundColor: '#ef476f',

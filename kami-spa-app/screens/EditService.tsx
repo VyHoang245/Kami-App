@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import { View, TextInput, Button, StyleSheet } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useNavigation } from '@react-navigation/native';
 
 export default function EditServiceScreen() {
-    const navigation = useNavigation();
+    // const navigation = useNavigation();
     const [name, setName] = useState('');
     const [price, setPrice] = useState('');
     const addService = async (name, price) => {
@@ -27,7 +26,7 @@ export default function EditServiceScreen() {
 
             if (response.ok) {
                 alert('Service added successfully!');
-                navigation.navigate("Home");
+                // navigation.navigate("Home");
                 console.log(data);
             } else {
                 alert(`Error: ${data.message || 'Failed to add service.'}`);

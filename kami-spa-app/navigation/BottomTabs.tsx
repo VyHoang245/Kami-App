@@ -7,7 +7,6 @@ import HomeScreen from '../screens/HomeScreen';
 import TransactionScreen from '../screens/TransactionScreen';
 import CustomerScreen from '../screens/CustomerScreen';
 import SettingScreen from '../screens/SettingScreen';
-import ServiceDetailScreen from '../screens/ServiceDetailScreen';
 
 const Tab = createBottomTabNavigator();
 

@@ -9,7 +9,7 @@ export default function CustomerScreen({ navigation }) {
     const [customers, setCustomers] = useState([]);
 
     useEffect(() => {
-        const fetchServices = async () => {
+        const fetchCustomers = async () => {
             try {
                 const token = await AsyncStorage.getItem('token');
                 const res = await axios.get('https://kami-backend-5rs0.onrender.com/customers', {
@@ -20,7 +20,7 @@ export default function CustomerScreen({ navigation }) {
                 console.log('Failed to load services', error);
             }
         };
-        fetchServices();
+        fetchCustomers();
     }, []);
 
     const renderItem = ({ item }) => (
@@ -34,8 +34,8 @@ export default function CustomerScreen({ navigation }) {
                 <Text style={styles.smallTitle}>Total money: {item.totalSpent}</Text>
             </View>
             <View style={styles.cover}>
-                <FontAwesome5 name="crown" size={24} color="black" />
-                <Text style={styles.guest}>Guest</Text>
+                <FontAwesome5 name="crown" size={24} color="#ef476f" />
+                <Text style={styles.guest}>{item.loyalty === 'normal' ? 'Guest' : 'Member'}</Text>
             </View>
 
         </TouchableOpacity>
@@ -61,7 +61,7 @@ export default function CustomerScreen({ navigation }) {
 }
 
 const styles = StyleSheet.create({
-    container: { flex: 1, padding: 20 },
+    container: { padding: 20 },
     header: {
         width: '100%',
         // flexDirection: 'row',
@@ -81,12 +81,13 @@ const styles = StyleSheet.create({
         borderColor: '#ddd',
         borderWidth: 1,
         flexDirection: 'row',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
+        alignItems: 'center'
     },
     smallTitle: { fontSize: 16, color: '#aaa' },
     guest: { fontSize: 16, fontWeight: 'bold', color: 'red' },
 
-    cover: { flex: 1, justifyContent: 'center', textAlign: 'left', alignItems: 'flex-end' },
+    cover: { gap: 2, alignItems: 'center' },
     floatingButton: {
         backgroundColor: '#ef476f',
         borderRadius: 25,
@@ -96,7 +97,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         elevation: 5,
         position: 'absolute',
-        bottom: 10,
+        bottom: 110,
         right: 10,
         zIndex: 9999,
     },

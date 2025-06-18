@@ -49,8 +49,8 @@ const styles = StyleSheet.create({
         borderRadius: 8,
         elevation: 2,
     },
-    header: { fontSize: 18, fontWeight: 'bold', marginBottom: 8 },
-    subheader: { fontSize: 16, fontWeight: 'bold' },
+    header: { fontSize: 16, fontWeight: 'bold', marginBottom: 8, color: '#e91e63' },
+    subheader: { fontSize: 16, fontWeight: 'bold', color: '#e91e63' },
     service: {
         flexDirection: 'row',
         justifyContent: 'space-between',

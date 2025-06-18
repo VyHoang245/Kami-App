@@ -12,7 +12,7 @@ export default function AddCUstomerScreen() {
         try {
             const token = await AsyncStorage.getItem('token'); // get login token from storage
 
-            const response = await fetch('https://kami-backend-5rs0.onrender.com/services', {
+            const response = await fetch('https://kami-backend-5rs0.onrender.com/customers', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -31,10 +31,10 @@ export default function AddCUstomerScreen() {
                 // navigation.navigate("Home");
                 console.log(data);
             } else {
-                alert(`Error: ${data.message || 'Failed to add service.'}`);
+                alert(`Error: ${data.message || 'Failed to add customer.'}`);
             }
         } catch (error) {
-            console.error('Error:', error);
+            console.error('Error to add customer:', error);
             alert('Something went wrong.');
         }
 

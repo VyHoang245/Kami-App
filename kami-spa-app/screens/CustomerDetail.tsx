@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, Alert, FlatList, Pressable, TouchableOpacity, StyleSheet } from 'react-native';
-import { useRouter, useLocalSearchParams } from 'expo-router';
+import { useRouter, useLocalSearchParams, useNavigation } from 'expo-router';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import api from '../api';
+import { RootStackParamList } from '../types';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
+type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
 export default function CustomerDetail({ route }) {
-    const navigation = useRouter();
+    const navigation = useNavigation<NavigationProp>();
     const { customerId } = route.params;
     const [customer, setCustomer] = useState();
     // console.log(customer);
@@ -14,7 +17,7 @@ export default function CustomerDetail({ route }) {
             try {
                 const response = await api.get(`/Customers/${customerId}`);
                 setCustomer(response.data);
-                console.log(customer);
+                console.log(response.data);
             } catch (err) {
                 console.error('Failed to load customer:', err);
             }
@@ -35,7 +38,7 @@ export default function CustomerDetail({ route }) {
                         method: 'DELETE',
                         headers: { Authorization: `Bearer ${token}` },
                     });
-                    navigation.back();
+                    navigation.goBack();
                 },
             },
         ]);
@@ -68,13 +71,7 @@ export default function CustomerDetail({ route }) {
                 />
             </View>
 
-
-            <TouchableOpacity onPress={() => navigation.push(
-                {
-                    pathname: '/CustomerEdit',
-                    params: customer
-                }
-            )}>
+            <TouchableOpacity onPress={() => navigation.navigate('CustomerEdit', { customer })}>
                 <Text style={{ color: 'blue', marginTop: 20 }}>✏️ Edit</Text>
             </TouchableOpacity>
 

@@ -1,69 +1,67 @@
 import React, { useState } from 'react';
-import { View, TextInput, Button, StyleSheet } from 'react-native';
+import { View, Text, TextInput, Button, StyleSheet, Alert } from 'react-native';
+import { useLocalSearchParams, useRouter } from 'expo-router';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export default function EditServiceScreen() {
-    // const navigation = useNavigation();
-    const [name, setName] = useState('');
-    const [price, setPrice] = useState('');
-    const addService = async (name, price) => {
-        try {
-            const token = await AsyncStorage.getItem('token'); // get login token from storage
+export default function EditServiceScreen({ route }) {
+    // const router = useRouter();
+    // const { service } = useLocalSearchParams();
+    const { service } = route.params;
+    // const service = JSON.parse(service as string); // parse the string
 
-            const response = await fetch('https://kami-backend-5rs0.onrender.com/services', {
-                method: 'POST',
+    const [name, setName] = useState(service.name);
+    const [price, setPrice] = useState(service.price.toString());
+
+    const handleUpdate = async () => {
+        try {
+            const token = await AsyncStorage.getItem('token');
+            const response = await fetch(`https://kami-backend-5rs0.onrender.com/services/${service._id}`, {
+                method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
-                    Authorization: `Bearer ${token}`, // token must be added to headers
+                    Authorization: `Bearer ${token}`,
                 },
-                body: JSON.stringify({
-                    name: name,
-                    price: price,
-                }),
+                body: JSON.stringify({ name, price: parseFloat(price) }),
             });
 
-            const data = await response.json();
-
             if (response.ok) {
-                alert('Service added successfully!');
-                // navigation.navigate("Home");
-                console.log(data);
+                Alert.alert('Success', 'Service updated successfully');
+                // router.back();
             } else {
-                alert(`Error: ${data.message || 'Failed to add service.'}`);
+                Alert.alert('Error', 'Failed to update service');
             }
-        } catch (error) {
-            console.error('Error:', error);
-            alert('Something went wrong.');
+        } catch (err) {
+            console.error(err);
+            Alert.alert('Error', 'Something went wrong');
         }
-
     };
+
     return (
         <View style={styles.container}>
+            <Text style={styles.title}>Service</Text>
+            <Text style={styles.label}>Service name *</Text>
+            <TextInput style={styles.input} value={name} onChangeText={setName} />
+            <Text style={styles.label}>Price *</Text>
             <TextInput
-                placeholder="Service Name"
-                value={name}
-                onChangeText={setName}
                 style={styles.input}
-            />
-            <TextInput
-                placeholder="Price"
                 value={price}
                 onChangeText={setPrice}
                 keyboardType="numeric"
-                style={styles.input}
             />
-            <Button title="Add Service" onPress={() => addService(name, Number(price))} />
+            <Button title="Update" color="#E91E63" onPress={handleUpdate} />
         </View>
     );
 }
 
 const styles = StyleSheet.create({
-    container: { padding: 16 },
+    container: { flex: 1, padding: 20, backgroundColor: '#fff' },
+    title: { fontSize: 18, fontWeight: 'bold', marginBottom: 20, color: '#E91E63' },
+    label: { fontWeight: 'bold', marginTop: 10 },
     input: {
-        borderWidth: 1,
         borderColor: '#ccc',
-        padding: 10,
-        marginBottom: 12,
+        borderWidth: 1,
         borderRadius: 6,
+        padding: 10,
+        marginBottom: 15,
     },
 });

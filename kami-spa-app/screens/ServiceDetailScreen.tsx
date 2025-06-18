@@ -6,11 +6,11 @@ import { View, Text, StyleSheet } from 'react-native';
 import { Button } from 'react-native';
 import { RootStackParamList } from '../types';
 
-// type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
+type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
 
-// const navigation = useNavigation<NavigationProp>();
+
 export default function ServiceDetailScreen({ route }) {
-
+    const navigation = useNavigation<NavigationProp>();
     const { service } = route.params;
 
     const formatDate = (dateString) => {

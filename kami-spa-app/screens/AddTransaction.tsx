@@ -51,7 +51,8 @@ const AddTransactionScreen = () => {
                 const res = await axios.get('https://kami-backend-5rs0.onrender.com/customers', {
                     headers: { Authorization: `Bearer ${token}` }
                 });
-                setCustomers(res.data); console.log(res.data);
+                setCustomers(res.data);
+                // console.log(res.data);
             } catch (error) {
                 console.log('Failed to load services', error);
             }

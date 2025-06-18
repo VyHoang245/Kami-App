@@ -14,9 +14,10 @@ export default function EditCustomer({ route }) {
             Alert.alert('Validation', 'Name and phone are required.');
             return;
         }
-
+        // console.log(name);
+        // console.log(phone);
         const token = await AsyncStorage.getItem('token');
-        const res = await fetch(`https://kami-backend-5rs0.onrender.com/Customers/${params.id}`, {
+        const res = await fetch(`https://kami-backend-5rs0.onrender.com/Customers/${customer._id}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
